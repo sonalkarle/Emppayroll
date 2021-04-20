@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\RepositoryLayer\\RepositoryLayer.csproj": {}
+    "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\RepositoryLayer\\RepositoryLayer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj": {
+    "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj",
+        "projectUniqueName": "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj",
         "projectName": "CommanLayer",
-        "projectPath": "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj",
+        "projectPath": "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\CommanLayer\\obj\\",
+        "outputPath": "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\CommanLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -58,14 +58,14 @@
         }
       }
     },
-    "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\RepositoryLayer\\RepositoryLayer.csproj": {
+    "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\RepositoryLayer\\RepositoryLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\RepositoryLayer\\RepositoryLayer.csproj",
+        "projectUniqueName": "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\RepositoryLayer\\RepositoryLayer.csproj",
         "projectName": "RepositoryLayer",
-        "projectPath": "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\RepositoryLayer\\RepositoryLayer.csproj",
+        "projectPath": "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\RepositoryLayer\\RepositoryLayer.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\RepositoryLayer\\obj\\",
+        "outputPath": "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\RepositoryLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -82,8 +82,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj": {
-                "projectPath": "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj"
+              "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj": {
+                "projectPath": "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj"
               }
             }
           }
@@ -98,6 +98,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "System.Data.SqlClient": {
               "target": "Package",
               "version": "[4.8.2, )"

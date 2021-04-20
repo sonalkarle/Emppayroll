@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj": {}
+    "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj": {
+    "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj",
+        "projectUniqueName": "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj",
         "projectName": "CommanLayer",
-        "projectPath": "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj",
+        "projectPath": "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\CommanLayer\\CommanLayer.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\bridgelabz assignement\\EmployeeDetails\\EmpDetails\\CommanLayer\\obj\\",
+        "outputPath": "C:\\Users\\User\\source\\repos\\EmployeeDetails\\EmpDetails\\CommanLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",

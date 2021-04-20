@@ -1,145 +1,128 @@
-﻿using BusinessLayer.Interface;
+﻿using BusinessLayer.Interfaces;
 using CommonLayer.ResponseModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace EmpDetails.Controllers
+namespace EmployeePayrollWebApp.Controllers
 {
-    [Route("api/[controller]")]
+   
+    
+    [Route("[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class EmployeePayrollController : ControllerBase
     {
-
         IEmployeeBL employeeBL;
-
-        public EmployeeController(IEmployeeBL employeeBL)                           //Constructor n passing an object to controller to access Business layer
+        List<EmployeeModel> employees;
+        public EmployeePayrollController(IEmployeeBL employeeBL)
         {
             this.employeeBL = employeeBL;
         }
-
-
-        [HttpGet]                                                                    //Creating a Get Api
-        public IActionResult GetAllEmployeeRecords()                                        //Here return type represents the result of an action method
+       
+        [HttpGet]
+        public ActionResult GetAllEployeesData()
         {
-            try
-            {                                                                                           //throw exception
-                List<EmployeeDetailModel> result = this.employeeBL.GetAllEmployeeRecords();                    //getting the data from BusinessLayer
-                return this.Ok(new { Success = true, Message = "Get operation is sucessful retrive all the data ", Data = result });
-            }
-
-            catch (Exception e)
-            {
-                return this.BadRequest(new { Success = false, Message = e.Message });
-            }
+            employees = employeeBL.GetAllEployeesData();
+            return Ok(new { employees });
         }
 
-        [HttpGet("{id}")]                                                                    //Creating a Get Api
-        public IActionResult GetEmployee(int id)                                        //Here return type represents the result of an action method
-        {
-            try
-            {                                                                                           //throw exception
-                EmployeeDetailModel result = employeeBL.GetEmployee(id);                    //getting the data from BusinessLayer
-                return this.Ok(new { Success = true, Message = "Get operation Successful retrive particular id data", Data = result });   //(smd format)    //this.Ok returns the data in json format
-            }
-
-            catch (Exception e)
-            {
-                return this.BadRequest(new { Success = false, Message = e.Message });
-            }
-        }
-
-
-
-        [HttpDelete("{id}")]                                                                    //Creating a delete Api
-        public IActionResult DeleteRecord(int id)                                        //Here return type represents the result of an action method
+        [HttpGet("{ID}")]
+        public ActionResult ReturnSpecificRecord(int ID)
         {
             try
             {
-                if (ModelState.IsValid)
+                EmployeeModel employee = employeeBL.ReturnSpecificRecord(ID);
+                if (employee != null)
                 {
-
-                    bool result = this.employeeBL.DeleteEmployee(id);                   //getting the data from BusinessLayer
-                    if (result != false)
-                    {
-                        return this.Ok(new { Success = true, Message = "Delete Employee Record Successfully " });   //(smd format)    //this.Ok returns the data in json format
-                    }
-                    else
-                    {
-                        return this.BadRequest(new { Success = false, Message = "Delete  Employee Record Unsuccessfully" });
-                    }
+                    return Ok(new { Message = "Successful", data = employee });
                 }
-
                 else
-                {
-                    throw new Exception("Model is not valid");
-                }
-
+                    return BadRequest(new { success = false, Message = "employee id doesn't exist" });
             }
-
-            catch (Exception e)
+            catch (Exception exception)
             {
-                return this.BadRequest(new { Success = false, Message = e.Message });
+                return this.BadRequest(new { success = false, exception.Message });
             }
-
         }
 
+     
 
-
-
-        [HttpPost("Register")]                                                                    //Creating a Post Api
-        public IActionResult RegisterRecord(EmployeeDetailModel employeeDetailModel)                                        //Here return type represents the result of an action method
+        [HttpPost("Register")]
+        public ActionResult RegisterEmployeeData(EmployeeModel employee)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    EmployeeModel result = employeeBL.RegisterEmployeeData(employee);
 
-                    EmployeeDetailModel result = this.employeeBL.RegisterEmployee(employeeDetailModel);                   //getting the data from BusinessLayer
                     if (result != null)
                     {
-                        return this.Ok(new { Success = true, Message = "Register Employee Successfully" });   //(smd format)    //this.Ok returns the data in json format
+                        return this.Ok(new { success = true, Message = "employee registered successfully", data = result });
                     }
                     else
-                    {
-                        return this.BadRequest(new { Success = false, Message = "Register Employee Unsuccessfully" });
-                    }
+                        return this.BadRequest(new { success = false, Message = "employee register unsuccessfull" });
                 }
-
                 else
-                {
                     throw new Exception("Model is not valid");
-                }
-
             }
-
-            catch (Exception e)
+            catch (Exception exception)
             {
-                return this.BadRequest(new { Success = false, Message = e.Message });
+                return this.BadRequest(new { success = false, exception.Message });
             }
         }
 
-
-        [HttpPut("{id}")]                                                                    //Creating a Post Api
-        public IActionResult UpdateEmployee(EmployeeDetailModel employeeDetailModel, int id)                                        //Here return type represents the result of an action method
+        [HttpPut("Update")]
+       
+        public ActionResult UpdateEmployeeData(EmployeeModel employee)
         {
-
             try
-            {                                                                                           //throw exception
-                bool result = employeeBL.UpdateEmployee(employeeDetailModel, id);                    //getting the data from BusinessLayer
-                return this.Ok(new { Success = true, Message = "Put operation Successful Update particular id data" });//(smd format)    //this.Ok returns the data in json format
-
-            }
-
-            catch (Exception e)
             {
-                return this.BadRequest(new { Success = false, Message = e.Message });
+                if (ModelState.IsValid)
+                {
+                    var ID = employee.EmployeeID;
+                    EmployeeModel result = employeeBL.UpdateEmployeeData(employee, ID);
+
+                    if (result != null)
+                    {
+                        return this.Ok(new { success = true, Message = "employee updated successfully", data = result });
+                    }
+                    else
+                        return this.BadRequest(new { success = false, Message = "employee update unsuccessfull" });
+                }
+                else
+                    throw new Exception("Model is not valid");
+            }
+            catch (Exception exception)
+            {
+                return this.BadRequest(new { success = false, exception.Message });
             }
         }
 
-
+        [HttpDelete("Delete/{ID}")]
+        public ActionResult DeleteSpecificRecord(int ID)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    EmployeeModel result = employeeBL.DeleteSpecificEmployeeData(ID);
+                    if (result != null)
+                    {
+                        return this.Ok(new { success = true, Message = "employee deleted successfully", data = result });
+                    }
+                    else
+                        return this.BadRequest(new { success = false, Message = "employee delete unsuccessfull" });
+                }
+                else
+                    throw new Exception("Model is not valid");
+            }
+            catch (Exception exception)
+            {
+                return this.BadRequest(new { success = false, exception.Message });
+            }
+        }
     }
 }

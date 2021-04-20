@@ -1,26 +1,17 @@
 ﻿using CommonLayer.ResponseModel;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using BusinessLayer.Service;
 
-namespace BusinessLayer.Interface
+namespace BusinessLayer.Interfaces
 {
-    public interface IEmployeeBL                            //This Interface IEmployeeBL is connected to Controller to avoid the 
-    {                                                       //implementation 
-                                                            //Interface is created for dependancy injection
-
-        public EmployeeDetailModel GetEmployee(int id);
-
-        public List<EmployeeDetailModel> GetAllEmployeeRecords();
-
-        public bool DeleteEmployee(int id);
-
-        public bool UpdateEmployee(EmployeeDetailModel employeeDetailModel, int id);
-
-        public EmployeeDetailModel RegisterEmployee(EmployeeDetailModel employeeDetailModel);
-
+    public interface IEmployeeBL
+    {
+        public List<EmployeeModel> GetAllEployeesData();
+        public EmployeeModel RegisterEmployeeData(EmployeeModel employee);
+        public EmployeeModel UpdateEmployeeData(EmployeeModel employee, int ID);
+        public EmployeeModel ReturnSpecificRecord(int ID);
+        public EmployeeModel DeleteSpecificEmployeeData(int iD);
     }
-
-
 }

@@ -1,97 +1,94 @@
-﻿using RepositoryLayer.Interface;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using BusinessLayer.Interfaces;
+using RepositoryLayer.Interfaces;
 using CommonLayer.ResponseModel;
-using BusinessLayer.Interface;
+using System;
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
+using System.IO;
+using static System.Net.Mime.MediaTypeNames;
+using Microsoft.AspNetCore.Http;
 
-namespace BusinessLayer.Service
+namespace BusinessLayer.Services
 {
-    public class EmployeeBLcs : IEmployeeBL
+    public class EmployeeBL : IEmployeeBL
     {
+        
         IEmployeeRL employeeRL;
-        public EmployeeBLcs(IEmployeeRL employeeRL)                      //Constructor n passing an object to IEmployeeBL
-        {                                                              //to get an access of IEmployeeRL
+        public EmployeeBL(IEmployeeRL employeeRL)
+        {
             this.employeeRL = employeeRL;
+           
         }
-
-
-
-        public List<EmployeeDetailModel> GetAllEmployeeRecords()
+        public List<EmployeeModel> GetAllEployeesData()
         {
             try
             {
-
-                return this.employeeRL.GetAllEmployeeRecords();                 //throw exceptions
+                return employeeRL.GetAllEmployeeDetail();
             }
-
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
 
-        public EmployeeDetailModel GetEmployee(int id)
+        public EmployeeModel RegisterEmployeeData(EmployeeModel employee)
         {
             try
             {
+                //var stream = file.OpenReadStream();
+                //var name = file.FileName;
+                //Account account = new Account("devjs8e7v", "217619793785761", "t8nmfVwKgMJciXM8dP_B2C5UK90");
+               // Cloudinary cloudinary = new Cloudinary(account);
+               // var uploadParams = new ImageUploadParams()
+               // {
+                 //   File = new FileDescription(name, stream)
+               // };
+               // ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
+               // employee.ProfileImage = uploadResult.Url.ToString();
+                return employeeRL.RegisterEmployeeData(employee);
 
-                return this.employeeRL.GetEmployee(id);                 //throw exceptions
             }
-
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw e;
+                throw exception;
             }
         }
 
-        public bool DeleteEmployee(int id)
+        public EmployeeModel UpdateEmployeeData(EmployeeModel employee, int ID)
         {
             try
             {
-
-                return this.employeeRL.DeleteEmployee(id);                 //throw exceptions
+                return employeeRL.UpdateEmployeeData(employee, ID);
             }
-
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw e;
+                throw exception;
             }
         }
 
-
-        public EmployeeDetailModel RegisterEmployee(EmployeeDetailModel employeeDetailModel)
+        public EmployeeModel ReturnSpecificRecord(int ID)
         {
             try
             {
-
-                return this.employeeRL.RegisterEmployee(employeeDetailModel);                 //throw exceptions
+                return employeeRL.ReturnSpecificRecord(ID);
             }
-
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw e;
+                throw exception;
             }
         }
 
-
-        public bool UpdateEmployee(EmployeeDetailModel employeeDetailModel, int id)
+        public EmployeeModel DeleteSpecificEmployeeData(int ID)
         {
             try
             {
-
-                return this.employeeRL.UpdateEmployee(employeeDetailModel, id);                 //throw exceptions
+                return employeeRL.DeleteSpecificEmployeeData(ID);
             }
-
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw e;
+                throw exception;
             }
         }
-
-
-
-
-
     }
 }

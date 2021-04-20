@@ -7,3 +7,12 @@ C:\Users\User\Desktop\bridgelabz assignement\EmployeeDetails\EmpDetails\CommanLa
 C:\Users\User\Desktop\bridgelabz assignement\EmployeeDetails\EmpDetails\CommanLayer\obj\Debug\netcoreapp3.1\CommanLayer.csproj.CoreCompileInputs.cache
 C:\Users\User\Desktop\bridgelabz assignement\EmployeeDetails\EmpDetails\CommanLayer\obj\Debug\netcoreapp3.1\CommanLayer.dll
 C:\Users\User\Desktop\bridgelabz assignement\EmployeeDetails\EmpDetails\CommanLayer\obj\Debug\netcoreapp3.1\CommanLayer.pdb
+C:\Users\User\source\repos\EmployeeDetails\EmpDetails\CommanLayer\bin\Debug\netcoreapp3.1\CommanLayer.deps.json
+C:\Users\User\source\repos\EmployeeDetails\EmpDetails\CommanLayer\bin\Debug\netcoreapp3.1\CommanLayer.dll
+C:\Users\User\source\repos\EmployeeDetails\EmpDetails\CommanLayer\bin\Debug\netcoreapp3.1\CommanLayer.pdb
+C:\Users\User\source\repos\EmployeeDetails\EmpDetails\CommanLayer\obj\Debug\netcoreapp3.1\CommanLayer.csprojAssemblyReference.cache
+C:\Users\User\source\repos\EmployeeDetails\EmpDetails\CommanLayer\obj\Debug\netcoreapp3.1\CommanLayer.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\EmployeeDetails\EmpDetails\CommanLayer\obj\Debug\netcoreapp3.1\CommanLayer.AssemblyInfo.cs
+C:\Users\User\source\repos\EmployeeDetails\EmpDetails\CommanLayer\obj\Debug\netcoreapp3.1\CommanLayer.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\EmployeeDetails\EmpDetails\CommanLayer\obj\Debug\netcoreapp3.1\CommanLayer.dll
+C:\Users\User\source\repos\EmployeeDetails\EmpDetails\CommanLayer\obj\Debug\netcoreapp3.1\CommanLayer.pdb

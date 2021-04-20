@@ -3,18 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using CommonLayer.ResponseModel;
 
-namespace RepositoryLayer.Interface
+namespace RepositoryLayer.Interfaces
 {
     public interface IEmployeeRL
     {
-        public List<EmployeeDetailModel> GetAllEmployeeRecords();
-        public EmployeeDetailModel GetEmployee(int id);
-        public bool DeleteEmployee(int id);
-        public bool UpdateEmployee(EmployeeDetailModel employeeDetailModel, int id);
-        public EmployeeDetailModel RegisterEmployee(EmployeeDetailModel employeeDetailModel);
-
-
+        public List<EmployeeModel> GetAllEmployeeDetail();
+        public EmployeeModel RegisterEmployeeData(EmployeeModel employee);
+        public EmployeeModel UpdateEmployeeData(EmployeeModel employee, int ID);
+        public EmployeeModel ReturnSpecificRecord(int iD);
+        public EmployeeModel DeleteSpecificEmployeeData(int iD);
     }
-
-
 }

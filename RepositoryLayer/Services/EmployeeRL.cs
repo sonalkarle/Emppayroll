@@ -1,306 +1,278 @@
-﻿using RepositoryLayer.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Text;
+using RepositoryLayer.Interfaces;
 using CommonLayer.ResponseModel;
-using EmployeeDetailModel = CommonLayer.ResponseModel.EmployeeDetailModel;
+using System.Data.SqlClient;
+using System.Data;
+using System.Linq;
 
-namespace RepositoryLayer.Service
+namespace RepositoryLayer.Services
 {
-    public class EmployeeRL : IEmployeeRL                            //Inheriting IEmployeeRL into Class EmployeeRL
+    public class EmployeeRL : IEmployeeRL
     {
-
-        private static string connectionString = "Data Source=DESKTOP-OKP25QH;Initial Catalog=employeeDetails;Integrated Security=SSPI";
-        public EmployeeDetailModel employeeModel = new EmployeeDetailModel();
-        
-        public List<EmployeeDetailModel> GetAllEmployeeRecords()
+        EmployeeModel employee;
+        List<EmployeeModel> EmployeeModelList;
+        static readonly string connectionString = "Data Source=DESKTOP-OKP25QH;Initial Catalog=EmployeeDetails;Integrated Security=SSPI";
+        static readonly SqlConnection connection = new SqlConnection(connectionString);
+        static void EstablishConnection()
         {
-         
-            List<EmployeeDetailModel> lists = new List<EmployeeDetailModel>();
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
+            if (connection != null && connection.State.Equals(ConnectionState.Closed))
             {
-                string Spname = "dbo.Er_GetAllEmployeedetails";
-                using (connection)
+                try
                 {
-                       
-                        //define the SqlCommand Object
-                        SqlCommand cmd = new SqlCommand(Spname, connection);
-                        //Commandtype contain the storedprocedure must be run
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        connection.Open();
-                        //Sqlreader provide way to reading and execute reader send sql statment to connection 
-                        SqlDataReader sqlDataReader = cmd.ExecuteReader();
-
-                        //check if there are records
-                        if (sqlDataReader.HasRows)
-                        {
-                            while (sqlDataReader.Read())
-                            {
-                            //insert into a list
-                            lists.Add(new EmployeeDetailModel
-                            {
-
-                                id = sqlDataReader.GetInt32(0),
-                                Name = sqlDataReader.GetString(1),
-                                Gender = Convert.ToChar(sqlDataReader.GetString(2)),
-                                image = sqlDataReader.GetString(3),
-                                Salary = sqlDataReader.GetInt32(4),
-                                startDate = sqlDataReader.GetDateTime(5),
-                                Notes = sqlDataReader.GetString(6),
-                                DeptID = sqlDataReader.GetInt32(7),
-                                Department1 = sqlDataReader.GetString(8),
-                                Department2 = sqlDataReader.GetString(9),
-                                Department3 = sqlDataReader.GetString(10)
-
-
-                            }); ; ; ;
-                            }
-
-                        }
-
-                        //Close Data Reader
-                        sqlDataReader.Close();
-                        connection.Close();
+                    connection.Open();
                 }
-                
-                return lists;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            
-        }
-        
-        public EmployeeDetailModel GetEmployee(int id)
-        {
-            
-
-            try
-            {
-               
-                SqlConnection connection = new SqlConnection(connectionString);
-                string spName = @"dbo.[Er_GetoneEmployeedetails]";
-                    using (connection)
-                    {
-                       
-                        //define the SqlCommand Object
-                        SqlCommand cmd = new SqlCommand(spName, connection);
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@id ", id);
-                        connection.Open();
-                        SqlDataReader sqlDataReader = cmd.ExecuteReader();
-
-                        //check if there r records
-                        if (sqlDataReader.HasRows)
-                        {
-                            while (sqlDataReader.Read())
-                            {
-                            employeeModel.id = sqlDataReader.GetInt32(0);
-                            employeeModel.Name = sqlDataReader.GetString(1);
-                            employeeModel.Gender = Convert.ToChar(sqlDataReader.GetString(2));
-                            employeeModel.image = sqlDataReader.GetString(3);
-                            employeeModel.Salary = sqlDataReader.GetInt32(4);
-                            employeeModel.startDate = sqlDataReader.GetDateTime(5);
-                            employeeModel.Notes = sqlDataReader.GetString(6);
-                            employeeModel.DeptID = sqlDataReader.GetInt32(7);
-                            employeeModel.Department1 = sqlDataReader.GetString(8);
-                            employeeModel.Department2 = sqlDataReader.GetString(9);
-                            employeeModel.Department3 = sqlDataReader.GetString(10);
-
-                        }
-                        }
-
-                        //Close Data Reader
-                        sqlDataReader.Close();
-                        connection.Close();
-                    }
-                return employeeModel;
-                
-                
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            
-        }
-        
-        public bool DeleteEmployee(int id)
-        {
-            try
-            {
-                SqlConnection connection = new SqlConnection(connectionString);
-                
-                
-                    string spName = @"dbo.[DeleteEmployeeDetail]";
-                    using (connection)
-                    {
-
-                        SqlCommand cmd = new SqlCommand(spName, connection);
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@id ", id);
-                        connection.Open();
-
-                        SqlDataReader sqlDataReader = cmd.ExecuteReader();
-
-                        if (sqlDataReader.HasRows == false)
-                        {
-                            while (sqlDataReader.Read())
-                            {
-                                employeeModel.id = sqlDataReader.GetInt32(0);
-                                employeeModel.Name = sqlDataReader.GetString(1);
-                                employeeModel.Gender = Convert.ToChar(sqlDataReader.GetString(2));
-                                employeeModel.image = sqlDataReader.GetString(3);
-                                employeeModel.Salary = sqlDataReader.GetInt32(4);
-                                employeeModel.startDate = sqlDataReader.GetDateTime(5);
-                                employeeModel.Notes = sqlDataReader.GetString(6);
-                                employeeModel.DeptID = sqlDataReader.GetInt32(7);
-                                employeeModel.Department1 = sqlDataReader.GetString(8);
-                                employeeModel.Department2 = sqlDataReader.GetString(9);
-                                employeeModel.Department3 = sqlDataReader.GetString(10);
-                        }
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-
-
-                        sqlDataReader.Close();
-                        connection.Close();
-                    }
-                
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-
-        public bool UpdateEmployee(EmployeeDetailModel employeeModel,int id)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                catch (Exception)
                 {
-                    string spName = @"dbo.[Er_Getupdatedeatils]";
-                    using (connection)
-                    {
-                        connection.Open();
-
-                        SqlCommand cmd = new SqlCommand(spName, connection);
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@id ", employeeModel.id);
-                        cmd.Parameters.AddWithValue("@name ", employeeModel.Name);
-                        cmd.Parameters.AddWithValue("@gender ", employeeModel.Gender);
-                        cmd.Parameters.AddWithValue("@image", employeeModel.image);
-                        cmd.Parameters.AddWithValue("@salry ", employeeModel.Salary);
-                        cmd.Parameters.AddWithValue("@startdate ", employeeModel.startDate);
-                        cmd.Parameters.AddWithValue("@note ", employeeModel.Notes);
-                        cmd.Parameters.AddWithValue("@Department1", employeeModel.Department1);
-                        cmd.Parameters.AddWithValue("@Department2", employeeModel.Department2);
-                        cmd.Parameters.AddWithValue("@Department3", employeeModel.Department3);
-                        cmd.Parameters.AddWithValue("@param", employeeModel.param);
-
-                        var result = cmd.ExecuteNonQuery();
-                        if (result != 0)
-                        {
-                            return true;
-
-
-                        }
-
-                        else
-                        {
-                            return false;
-
-
-                        }
-
-                        //Close Data Reader
-                        connection.Close();
-                    }
+                    throw;
                 }
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
         }
-
-        public EmployeeDetailModel RegisterEmployee(EmployeeDetailModel employeeModel)
+        static void CloseConnection()
         {
-           
-
-            try
+            if (connection != null && !connection.State.Equals(ConnectionState.Open))
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                try
                 {
-                    string spName = @"dbo.[AddEmployeeDetail]";
-                    using (connection)
-                    {
-
-                        SqlCommand cmd = new SqlCommand(spName, connection);
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                    
-                        cmd.Parameters.AddWithValue("@EmpName", employeeModel.Name);
-                        cmd.Parameters.AddWithValue("@Gender", employeeModel.Gender);
-                        cmd.Parameters.AddWithValue("@image", employeeModel.image);
-                        cmd.Parameters.AddWithValue("@salary", employeeModel.Salary);
-                        cmd.Parameters.AddWithValue("@startdate", employeeModel.startDate);
-                        cmd.Parameters.AddWithValue("@Notes", employeeModel.Notes);
-                        cmd.Parameters.AddWithValue("@department1", employeeModel.Department1);
-                        cmd.Parameters.AddWithValue("@department2", employeeModel.Department2);
-                        cmd.Parameters.AddWithValue("@department3", employeeModel.Department3);
-
-                        connection.Open();
-
-                        SqlDataReader sqlDataReader = cmd.ExecuteReader();
-
-
-                        if (sqlDataReader.HasRows)
-                        {
-                            while (sqlDataReader.Read())
-                            {
-                                
-                                employeeModel.Name = sqlDataReader.GetString(0);
-                                employeeModel.Gender = Convert.ToChar(sqlDataReader.GetString(1));
-                                employeeModel.image = sqlDataReader.GetString(2);
-                                employeeModel.Salary = sqlDataReader.GetInt32(3);
-                                employeeModel.startDate = sqlDataReader.GetDateTime(4);
-                                employeeModel.Notes = sqlDataReader.GetString(5);
-                                employeeModel.DeptID = sqlDataReader.GetInt32(6);
-                                employeeModel.Department1 = sqlDataReader.GetString(7);
-                                employeeModel.Department2 = sqlDataReader.GetString(8);
-                                employeeModel.Department3 = sqlDataReader.GetString(9);
-
-
-                            }
-                        }
-
-
-                        sqlDataReader.Close();
-                        connection.Close();
-                    }
+                    connection.Close();
+                }
+                catch (Exception)
+                {
+                    throw; 
                 }
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            return employeeModel;
         }
 
+        public List<EmployeeModel> GetAllEmployeeDetail()
+        {
+            return this.GetAllEmployeePayrollData();
+        }
+        private List<EmployeeModel> GetAllEmployeePayrollData()
+        {
+            EmployeeModelList = new List<EmployeeModel>();
+            SqlCommand command = new SqlCommand("dbo.GetAllEmployeeData", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+            try
+            {
+                EstablishConnection();
+                SqlDataReader rd = command.ExecuteReader();
+                while (rd.Read())
+                {
+                    employee = new EmployeeModel();
+                    employee.EmployeeID = rd["EmpID"] == DBNull.Value ? default : (int)rd["EmpID"];
+                    employee.EmployeeName = rd["EmpName"] == DBNull.Value ? default : (string)rd["EmpName"];
+                    employee.Gender = rd["Gender"] == DBNull.Value ? default : (string)rd["Gender"];
+                    employee.Salary = rd["Salary"] == DBNull.Value ? default : (long)rd["Salary"];
+                    employee.StartDate = rd["StartDate"] == DBNull.Value ? default : (DateTime)rd["StartDate"];
+                    employee.Notes = rd["Notes"] == DBNull.Value ? default : (string)rd["Notes"];
+                    employee.Department = rd["DepartmentNames"] == DBNull.Value ? default : ((string)rd["DepartmentNames"]).Split(",");
+                    employee.ProfileImage = rd["ProfileImage"] == DBNull.Value ? default : (string)rd["ProfileImage"];
+                    EmployeeModelList.Add(employee);
+                }
+                rd.Close();
+                
+                return EmployeeModelList.OrderBy(Emp => Emp.EmployeeID).ToList();
+            }
+            catch (SqlException)
+            {
+                try
+                {
+                    CloseConnection();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message); ;
+                }
+            }
+            return null;
+        }
 
+        public EmployeeModel RegisterEmployeeData(EmployeeModel employee)
+        {
+            try
+            {
+                EstablishConnection();
+                SqlCommand cmd = new SqlCommand("dbo.InsertEmployeeRecord", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@ProfileImage", employee.ProfileImage);
+                cmd.Parameters.AddWithValue("@EmpName", employee.EmployeeName);
+                cmd.Parameters.AddWithValue("@Gender", employee.Gender);
+                cmd.Parameters.AddWithValue("@StartDate", employee.StartDate);
+                cmd.Parameters.AddWithValue("@Salary", employee.Salary);
+                string DepartmentNames = employee.Department == null ? "" : string.Join(",", employee.Department);
+                cmd.Parameters.AddWithValue("@Department", DepartmentNames);
+                cmd.Parameters.AddWithValue("@Notes", employee.Notes);
+
+                SqlDataReader rd = cmd.ExecuteReader();
+                employee = new EmployeeModel();
+                if (rd.Read())
+                {
+                    employee.EmployeeID = rd["EmpID"] == DBNull.Value ? default : (int)rd["EmpID"];
+                    employee.EmployeeName = rd["EmpName"] == DBNull.Value ? default : (string)rd["EmpName"];
+                    employee.Gender = rd["Gender"] == DBNull.Value ? default : (string)rd["Gender"];
+                    employee.Salary = rd["Salary"] == DBNull.Value ? default : (long)rd["Salary"];
+                    employee.StartDate = rd["StartDate"] == DBNull.Value ? default : (DateTime)rd["StartDate"];
+                    employee.Notes = rd["Notes"] == DBNull.Value ? default : (string)rd["Notes"];
+                    employee.Department = rd["DepartmentNames"] == DBNull.Value ? default : ((string)rd["DepartmentNames"]).Split(",");
+                }
+                else
+                {
+                    employee = null;
+                }
+                rd.Close();
+                return employee;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                try
+                {
+                    CloseConnection();
+                }
+                catch (Exception e1)
+                {
+                    Console.WriteLine(e1.Message); ;
+                }
+            }
+            return null;
+        }
+        public EmployeeModel UpdateEmployeeData(EmployeeModel employee, int ID)
+        {
+            try
+            {
+                EstablishConnection();
+                SqlCommand cmd = new SqlCommand("dbo.UpdateEmployeeRecord", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@EmpID", ID);
+                cmd.Parameters.AddWithValue("@EmpName", employee.EmployeeName);
+                cmd.Parameters.AddWithValue("@Gender", employee.Gender);
+                cmd.Parameters.AddWithValue("@StartDate", employee.StartDate);
+                cmd.Parameters.AddWithValue("@Salary", employee.Salary);
+                cmd.Parameters.AddWithValue("@Department", string.Join(",", employee.Department));
+                cmd.Parameters.AddWithValue("@Notes", employee.Notes);
+
+                SqlDataReader rd = cmd.ExecuteReader();
+                employee = new EmployeeModel();
+                if (rd.Read())
+                {
+                    employee.EmployeeID = rd["EmpID"] == DBNull.Value ? default : (int)rd["EmpID"];
+                    employee.EmployeeName = rd["EmpName"] == DBNull.Value ? default : (string)rd["EmpName"];
+                    employee.Gender = rd["Gender"] == DBNull.Value ? default : (string)rd["Gender"];
+                    employee.Salary = rd["Salary"] == DBNull.Value ? default : (long)rd["Salary"];
+                    employee.StartDate = rd["StartDate"] == DBNull.Value ? default : (DateTime)rd["StartDate"];
+                    employee.Notes = rd["Notes"] == DBNull.Value ? default : (string)rd["Notes"];
+                    employee.Department = rd["DepartmentNames"] == DBNull.Value ? default : ((string)rd["DepartmentNames"]).Split(",");
+                }
+                else
+                {
+                    employee = null;
+                }
+                rd.Close();
+                return employee;
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    CloseConnection();
+                }
+                catch (Exception e1)
+                {
+                    Console.WriteLine(e1.Message); ;
+                }
+            }
+            return null;
+        }
+
+        public EmployeeModel ReturnSpecificRecord(int ID)
+        {
+            employee = new EmployeeModel();
+            SqlCommand command = new SqlCommand("dbo.GetSpecificEmployeeData", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+            try
+            {
+                EstablishConnection();
+                command.Parameters.AddWithValue("@EmpID", ID);
+                SqlDataReader rd = command.ExecuteReader();
+                if (rd.Read())
+                {
+                    employee.EmployeeID = rd["EmpID"] == DBNull.Value ? default : (int)rd["EmpID"];
+                    employee.EmployeeName = rd["EmpName"] == DBNull.Value ? default : (string)rd["EmpName"];
+                    employee.Gender = rd["Gender"] == DBNull.Value ? default : (string)rd["Gender"];
+                    employee.Salary = rd["Salary"] == DBNull.Value ? default : (long)rd["Salary"];
+                    employee.StartDate = rd["StartDate"] == DBNull.Value ? default : (DateTime)rd["StartDate"];
+                    employee.Notes = rd["Notes"] == DBNull.Value ? default : (string)rd["Notes"];
+                    employee.Department = rd["DepartmentNames"] == DBNull.Value ? default : ((string)rd["DepartmentNames"]).Split(",");
+                }
+                rd.Close();
+                
+                return employee;
+            }
+            catch (SqlException)
+            {
+                try
+                {
+                    CloseConnection();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message); ;
+                }
+            }
+            return null;
+        }
+
+        public EmployeeModel DeleteSpecificEmployeeData(int ID)
+        {
+            EmployeeModel employee = new EmployeeModel();
+            try
+            {
+                EstablishConnection();
+                SqlCommand cmd = new SqlCommand("dbo.DeleteEmployeeRecord", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@EmpID", ID);
+
+                SqlDataReader rd = cmd.ExecuteReader();
+                if (rd.Read())
+                {
+                    employee.EmployeeID = rd["EmpID"] == DBNull.Value ? default : (int)rd["EmpID"];
+                    employee.EmployeeName = rd["EmpName"] == DBNull.Value ? default : (string)rd["EmpName"];
+                    employee.Gender = rd["Gender"] == DBNull.Value ? default : (string)rd["Gender"];
+                    employee.Salary = rd["Salary"] == DBNull.Value ? default : (long)rd["Salary"];
+                    employee.StartDate = rd["StartDate"] == DBNull.Value ? default : (DateTime)rd["StartDate"];
+                    employee.Notes = rd["Notes"] == DBNull.Value ? default : (string)rd["Notes"];
+                    employee.Department = rd["DepartmentNames"] == DBNull.Value ? default : ((string)rd["DepartmentNames"]).Split(",");
+                }
+                else
+                {
+                    employee = null;
+                }
+                rd.Close();
+                return employee;
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    CloseConnection();
+                }
+                catch (Exception e1)
+                {
+                    Console.WriteLine(e1.Message); ;
+                }
+            }
+            return null;
+        }
     }
-
 }
-
-
